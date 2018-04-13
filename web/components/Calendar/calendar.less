@@ -1,0 +1,43 @@
+#calendar {
+   #calendarHeader {
+      display: flex;
+      padding: 12px 0;
+      border-bottom: 1px solid lightgrey;
+      margin-bottom: 8px;
+      .monthNavigationButton {
+         flex: 0 1 50px;
+         cursor: pointer;
+         &.prev {
+            text-align: left;
+         }
+         &.next {
+            text-align: right;
+         }
+      }
+      .monthName {
+         font-weight: bold;
+         flex: 1 0;
+         text-align: center;
+      }
+   }
+   .dayRow {
+      padding: 8px 4px;
+      display: flex;
+      user-select: none;
+      &:nth-child(even) {
+         background-color: #efefef;
+      }
+      .dayNumber {
+         font-size: 1.8em;
+         margin-right: 8px;
+      }
+      .dayName {
+         &.sunday {
+            color: #ff0000;
+         }
+      }
+      &.selected {
+         background-color: lightblue;
+      }
+   }
+}

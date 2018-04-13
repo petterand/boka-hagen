@@ -5,19 +5,32 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-   currentDate: new Date().getTime()
+   currentDate: new Date().getTime(),
+   selectDates: []
 };
 
 const mutations = {
    CHANGE_MONTH(state, direction) {
       const newDate = new Date(state.currentDate).setMonth(new Date(state.currentDate).getMonth() + direction);
       state.currentDate = newDate;
+   },
+   SELECT_DATES(state, dates) {
+      state.selectDates = dates;
+   },
+   RESET_SELECTED_DATES(state) {
+      state.selectDates = [];
    }
 }
 
 const actions = {
    changeMonth({ commit }, direction) {
       commit('CHANGE_MONTH', direction);
+   },
+   selectDates({ commit }, dates) {
+      commit('SELECT_DATES', dates);
+   },
+   resetSelectedDates({ commit }) {
+      commit('RESET_SELECTED_DATES');
    }
 };
 

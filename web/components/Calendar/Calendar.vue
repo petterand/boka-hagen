@@ -7,7 +7,7 @@
             <div class="monthNavigationButton next fa fa-chevron-right" v-on:click="gotoNextMonth"></div>
          </div>
          <div id="monthWrapper">
-            <div v-for="(day,index) in numberOfDaysInMonth" :data-date="getDate(day)" v-bind:key="index" class="dayRow" @mousedown="down" @mousemove="move" @mouseup="up">
+            <div v-for="(day,index) in numberOfDaysInMonth" :data-date="getDate(day)" v-bind:key="index" class="dayRow" @mousedown.stop="down" @mousemove.stop="move" @mouseup.stop="up">
                <span class="dayNumber">{{day}}</span> <span class="dayName" v-bind:class="{'sunday': isSunday(day)}">{{dayName(day)}}</span>
             </div>
          </div>
@@ -22,7 +22,14 @@ export default {
   created() {
     moment.locale("sv");
   },
-  mounted() {},
+  mounted() {
+    document.querySelector("body").addEventListener("click", e => {
+      const monthListElem = document.querySelector("#monthWrapper");
+      if (!monthListElem.contains(e.target)) {
+        this.resetSelection();
+      }
+    });
+  },
   data() {
     return {
       mouseIsDown: false,
@@ -48,10 +55,12 @@ export default {
       const date = new Date(this.$store.state.currentDate).setDate(day);
       return moment(date).day() === 0;
     },
-
+    click() {
+      return false;
+    },
     move(e) {
       if (this.mouseIsDown) {
-        const date = e.target.dataset.date;
+        //const date = e.target.dataset.date;
         if (!e.target.classList.contains("selected")) {
           e.target.classList.add("selected");
         }
@@ -62,6 +71,18 @@ export default {
     },
     up() {
       this.mouseIsDown = false;
+      this.$store.dispatch("selectDates", this.getSelectedDates());
+    },
+    getSelectedDates() {
+      return [...document.querySelectorAll("#calendar .selected")].map(el => {
+        return el.dataset.date;
+      });
+    },
+    resetSelection() {
+      this.$store.dispatch("resetSelectedDates");
+      [...document.querySelectorAll("#calendar .selected")].forEach(el => {
+        el.classList.remove("selected");
+      });
     }
   },
   computed: {

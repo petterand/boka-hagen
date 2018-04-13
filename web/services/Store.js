@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 const state = {
    currentDate: new Date().getTime(),
-   selectDates: []
+   selectedDates: []
 };
 
 const mutations = {
@@ -15,10 +15,10 @@ const mutations = {
       state.currentDate = newDate;
    },
    SELECT_DATES(state, dates) {
-      state.selectDates = dates;
+      state.selectedDates = dates;
    },
    RESET_SELECTED_DATES(state) {
-      state.selectDates = [];
+      state.selectedDates = [];
    }
 }
 

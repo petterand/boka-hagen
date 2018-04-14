@@ -6,6 +6,9 @@ Vue.use(Vuex);
 
 const state = {
    currentDate: new Date().getTime(),
+   user: {
+      username: "Knut Knutsson"
+   },
    selectedDates: [],
    bookedDates: [
       {
@@ -18,7 +21,7 @@ const state = {
       },
       {
          date: { from: "2018-05-01", to: "2018-05-05" },
-         user: 'Knut Knutsson'
+         user: 'Pål Pålsson'
       }
    ]
 };

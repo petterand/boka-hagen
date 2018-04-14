@@ -31,6 +31,21 @@ function getDateRanges(strArray) {
    return ranges;
 }
 
+
+function getDatesInRange(from, to) {
+   let rangeArray = []
+   const startDate = new Date(from);
+   const endDate = new Date(to);
+   let currentDate = startDate;
+
+   do {
+      rangeArray.push(moment(currentDate).format('YYYY-MM-DD'));
+      currentDate.setDate(currentDate.getDate() + 1);
+   } while (currentDate <= endDate);
+   return rangeArray;
+}
+
 export default {
-   getDateRanges
+   getDateRanges,
+   getDatesInRange
 }

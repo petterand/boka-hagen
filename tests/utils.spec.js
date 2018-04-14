@@ -10,4 +10,14 @@ describe('Utils', () => {
 
       expect(result).to.eql(expected);
    });
+
+   describe('getDatesInRange', () => {
+      const from = "2018-04-01";
+      const to = "2018-04-05";
+      const result = Utils.getDatesInRange(from, to);
+
+      const expected = ["2018-04-01", "2018-04-02", "2018-04-03", "2018-04-04", "2018-04-05"]
+      expect(result).to.eql(expected);
+
+   });
 });

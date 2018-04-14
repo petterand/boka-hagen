@@ -6,7 +6,21 @@ Vue.use(Vuex);
 
 const state = {
    currentDate: new Date().getTime(),
-   selectedDates: []
+   selectedDates: [],
+   bookedDates: [
+      {
+         date: { from: "2018-04-20", to: "2018-04-24" },
+         user: 'Knut Knutsson'
+      },
+      {
+         date: { from: "2018-04-27", to: "2018-04-27" },
+         user: 'Knut Knutsson'
+      },
+      {
+         date: { from: "2018-05-01", to: "2018-05-05" },
+         user: 'Knut Knutsson'
+      }
+   ]
 };
 
 const mutations = {

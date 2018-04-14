@@ -76,7 +76,7 @@ export default {
       this.$store.dispatch("selectDates", this.getSelectedDates());
     },
     getSelectedDates() {
-      return [...document.querySelectorAll("#calendar .selected")]
+      return [...document.querySelectorAll("#calendar .selected:not(.booked)")]
         .map(el => {
           return el.dataset.date;
         })

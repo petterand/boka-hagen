@@ -3,7 +3,11 @@
    <div id="userInfo">
       <div id="imageAndUsername">
          <img src="../../assets/avatar.png">
-         <p>{{username}}</p>
+         <p>
+            <span>{{username}}</span>
+            <span><a href="" @click.prevent="signout">Logga ut</a></span>
+         </p>
+
       </div>
       <div id="selectedDatesWrapper" v-if="formattedDates.length > 0">
          <p>Dina valda datum:</p>
@@ -21,6 +25,11 @@
 <script>
 import Utils from "../../services/Utils";
 export default {
+  methods: {
+    signout() {
+      this.$store.dispatch("logout");
+    }
+  },
   computed: {
     formattedDates() {
       return Utils.getDateRanges(this.$store.state.selectedDates);
@@ -33,7 +42,7 @@ export default {
         });
     },
     username() {
-      return this.$store.state.user.username;
+      return this.$store.state.user.name;
     }
   }
 };

@@ -1,6 +1,8 @@
 @import "~font-awesome/less/font-awesome";
 @import '../components/Calendar/calendar.less';
 @import '../components/UserInfo/user-info.less';
+@import '../components/Login/login.less';
+@import '../components/RegisterUser/register-user.less';
 html,
 body,
 #app,
@@ -22,13 +24,22 @@ body {
    height: ~"calc(100% - 40px)";
 }
 
-#calendar-wrapper {
+#left-wrapper {
    flex: 0 1 70%;
    margin-right: 12px;
    overflow-y: scroll;
    padding-right: 16px;
 }
 
+#right-wrapper {
+   flex: 0 0 30%;
+}
+
 #user-info-wrapper {
    flex: 1 0 30%
+}
+
+input {
+   font-size: 1em;
+   padding: 0.4em 0.3em;
 }

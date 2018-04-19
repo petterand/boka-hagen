@@ -1,5 +1,6 @@
 {
    "name": "boka-hagen",
+   "version": "1.0.0",
    "scripts": {
       "start": "./node_modules/.bin/webpack-dev-server",
       "server": "node app/server.js",

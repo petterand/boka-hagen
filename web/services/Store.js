@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import AuthService from './AuthService';
+import BookingsService from './BookingsService';
 
 
 Vue.use(Vuex);
@@ -11,20 +12,7 @@ const state = {
    isLoggedIn: false,
    selectedDates: [],
    showRegister: false,
-   bookedDates: [
-      {
-         date: { from: "2018-04-20", to: "2018-04-24" },
-         user: 'Knut Knutsson'
-      },
-      {
-         date: { from: "2018-04-27", to: "2018-04-27" },
-         user: 'Knut Knutsson'
-      },
-      {
-         date: { from: "2018-05-01", to: "2018-05-05" },
-         user: 'Pål Pålsson'
-      }
-   ]
+   bookings: []
 };
 
 const mutations = {
@@ -54,6 +42,9 @@ const mutations = {
    },
    SHOW_REGISTER(state, show) {
       state.showRegister = show;
+   },
+   SET_BOOKINGS(state, bookings) {
+      state.bookings = [...state.bookings, ...bookings];
    }
 }
 
@@ -95,6 +86,24 @@ const actions = {
    },
    showRegister({ commit }, show) {
       commit("SHOW_REGISTER", show);
+   },
+   getBookings({ commit }) {
+      return new Promise((resolve, reject) => {
+         BookingsService.getBookings().then(bookings => {
+            commit("SET_BOOKINGS", bookings);
+         }, (err) => {
+            reject(err);
+         });
+      });
+   },
+   bookDates({ commit }, dates) {
+      return new Promise((resolve, reject) => {
+         BookingsService.bookDates(dates).then((newBookings) => {
+            commit("SET_BOOKINGS", newBookings);
+         }, (err) => {
+            reject(err);
+         });
+      });
    }
 };
 

@@ -4,6 +4,9 @@ const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const Bluebird = require('bluebird');
+
+mongoose.Promise = Bluebird;
 
 const config = require('./configs/server-config');
 
@@ -34,8 +37,8 @@ app.post('/api/signout', function (req, res) {
 });
 
 app.post('/api/login', passport.authenticate('login'), (req, res) => {
-   var user = { name: req.user.name };
-   res.send({ status: 'loggedin', user: user });
+   var user = { username: req.user.username, name: req.user.name };
+   res.send({ status: 'loggedin', user });
 });
 
 app.get('/api/isAuthenticated', (req, res) => {
@@ -43,7 +46,7 @@ app.get('/api/isAuthenticated', (req, res) => {
       isAuthenticated: req.isAuthenticated()
    };
    if (req.user) {
-      responseObject.user = { name: req.user.name };
+      responseObject.user = { username: req.user.username, name: req.user.name };
    }
    res.send(responseObject);
 });

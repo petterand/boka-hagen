@@ -10,22 +10,25 @@
          <label for="password">Bekräfta ditt lösenord</label>
          <input type="password" name="password" v-model="register_creds.confirm_password">
          <input type="submit" value="Registrera">
+         <button class="secondary" @click.stop.prevent="cancelRegistration">Avbryt</button>
       </form>
    </div>
 </template>
 
 <script>
+import Vue from "vue";
 import AuthService from "../../services/AuthService";
 import EventHub from "../../services/EventHub";
 export default {
   data() {
     return {
-      register_creds: {
+      default_creds: {
         name: "",
         username: "",
         password: "",
         confirm_password: ""
-      }
+      },
+      register_creds: Vue.util.extend({}, this.default_creds)
     };
   },
   methods: {
@@ -37,6 +40,10 @@ export default {
           this.$store.dispatch("showRegister", false);
         });
       }
+    },
+    cancelRegistration() {
+      this.$store.dispatch("showRegister", false);
+      this.register_creds = this.default_creds;
     }
   }
 };

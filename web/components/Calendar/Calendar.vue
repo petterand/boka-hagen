@@ -3,7 +3,7 @@
       <div id="calendar">
          <div id="calendarHeader">
             <div class="monthNavigationButton prev fa fa-chevron-left" v-on:click="gotoPreviousMonth"></div>
-            <div class="monthName">{{monthName}}</div>
+            <div class="monthName">{{formatCurrentDate("MMMM YYYY")}}</div>
             <div class="monthNavigationButton next fa fa-chevron-right" v-on:click="gotoNextMonth"></div>
          </div>
          <div id="monthWrapper">
@@ -11,12 +11,12 @@
                   v-bind:key="index"
                   :data-date="day.date" 
                   class="dayRow"
-                  v-bind:class="{'booked': day.booking}"
+                  v-bind:class="{'booked': day.booking, 'selectable': $store.state.isLoggedIn}"
                   @mousedown.stop="down" 
                   @mousemove.stop="move" 
                   @mouseup.stop="up">
                <span class="dayNumber">{{day.dayNumber}}</span> <span class="dayName" v-bind:class="{'sunday': isSunday(day.date)}">{{day.dayName}}</span>
-               <span v-if="day.booking" class="booking-info">{{day.booking.user}}</span>
+               <span v-if="day.booking" class="booking-info">{{day.booking.user.name}}</span>
             </div>
          </div>
       </div>
@@ -46,6 +46,9 @@ export default {
     };
   },
   methods: {
+    formatCurrentDate(format) {
+      return moment(this.$store.state.currentDate).format(format);
+    },
     gotoPreviousMonth() {
       this.$store.dispatch("changeMonth", -1);
     },
@@ -64,11 +67,13 @@ export default {
       }
     },
     down(e) {
-      this.mouseIsDown = true;
-      if (!e.target.classList.contains("selected")) {
-        e.target.classList.add("selected");
-      } else {
-        e.target.classList.remove("selected");
+      if (this.$store.state.isLoggedIn) {
+        this.mouseIsDown = true;
+        if (!e.target.classList.contains("selected")) {
+          e.target.classList.add("selected");
+        } else {
+          e.target.classList.remove("selected");
+        }
       }
     },
     up() {
@@ -123,18 +128,18 @@ export default {
     },
     bookingsInCurrentMonth() {
       let bookingsInMonth = [];
-      this.$store.state.bookedDates
+      this.$store.state.bookings
         .filter(booking => {
-          const fromDateMonth = moment(booking.date.from).month();
-          const toDateMonth = moment(booking.date.to).month();
+          const fromDateMonth = moment(booking.from).month();
+          const toDateMonth = moment(booking.to).month();
           const currentMonth = moment(this.$store.state.currentDate).month();
 
           return fromDateMonth === currentMonth && toDateMonth === currentMonth;
         })
         .forEach(booking => {
           const dateRanges = Utils.getDatesInRange(
-            booking.date.from,
-            booking.date.to
+            booking.from,
+            booking.to
           ).map(date => {
             return { date, user: booking.user };
           });

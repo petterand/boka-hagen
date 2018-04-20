@@ -2,7 +2,19 @@
    padding: 0 12px;
    #imageAndUsername {
       display: flex;
-      p {}
+      p {
+         margin: 0;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         .signout a {
+            color: #000;
+            font-size: 0.8em;
+            &:visited {
+               color: #000;
+            }
+         }
+      }
       img {
          margin-right: 12px;
          border-radius: 100%;

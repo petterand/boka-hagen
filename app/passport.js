@@ -28,7 +28,7 @@ module.exports = (passport) => {
                return done(null, false);
             }
 
-            if (!user.isPasswordValid(password))  {
+            if (!user.isPasswordValid(password)) {
                return done(null, false);
             }
 

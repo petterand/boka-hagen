@@ -8,7 +8,7 @@ function getDateRanges(strArray) {
       const startIndex = index + 1;
       index = getRangeEndIndex(startIndex);
       if (strArray[startIndex] && strArray[index]) {
-         ranges.push(`${strArray[startIndex]} - ${strArray[index]}`);
+         ranges.push({ from: strArray[startIndex], to: strArray[index] });
       }
    }
 

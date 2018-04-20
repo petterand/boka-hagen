@@ -16,6 +16,14 @@ body {
    margin: 0;
 }
 
+p {
+   font-size: 1em;
+}
+
+a {
+   color: #000;
+}
+
 #index-wrapper {
    display: flex;
    width: 80%;
@@ -42,4 +50,21 @@ body {
 input {
    font-size: 1em;
    padding: 0.4em 0.3em;
+}
+
+button,
+input[type="submit"] {
+   background-color: #426FC5;
+   border: none;
+   color: white;
+   text-transform: uppercase;
+   padding: 12px 8px;
+   cursor: pointer;
+   outline: none;
+   font-size: 0.7em;
+   &.secondary {
+      color: #426FC5;
+      background-color: #fff;
+      border: 1px solid #426FC5;
+   }
 }

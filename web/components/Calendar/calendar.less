@@ -25,7 +25,9 @@
       padding: 8px 4px;
       display: flex;
       user-select: none;
-      cursor: pointer;
+      &.selectable {
+         cursor: pointer;
+      }
       &:nth-child(even) {
          background-color: #efefef;
       }
@@ -47,6 +49,7 @@
       .booking-info {
          align-self: center;
          margin-left: auto;
+         margin-right: 8px;
       }
    }
 }

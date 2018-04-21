@@ -22,4 +22,31 @@
          height: 50px;
       }
    }
+   #bookedDates,
+   #selectedDatesWrapper {
+      margin-bottom: 24px;
+      p {
+         margin-bottom: 0;
+         font-weight: bold;
+         font-size: 0.9em;
+      }
+      table {
+         border-collapse: collapse;
+         width: 100%;
+         border-top: 1px solid #efefef;
+         border-bottom: 1px solid #efefef;
+         margin-bottom: 8px;
+         tr {
+            &:nth-child(even) {
+               background-color: #efefef;
+            }
+            td {
+               padding: 8px;
+               &.delete-booking {
+                  color: #757575;
+               }
+            }
+         }
+      }
+   }
 }

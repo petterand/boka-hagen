@@ -47,6 +47,10 @@ module.exports = {
          {
             test: /\.(woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,
             loader: "url-loader?limit=10000&name=fonts/[name].[ext]"
+         },
+         {
+            test: /\.(png|jp(e*)g)$/,
+            loader: "url-loader?limit=6000&name=assets/[name].[ext]"
          }
       ]
    },

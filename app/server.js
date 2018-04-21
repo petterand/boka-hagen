@@ -54,8 +54,8 @@ app.get('/api/isAuthenticated', (req, res) => {
 app.use('/api/booking', require('./booking_router'));
 app.use('/api/user', require('./user_router'));
 
-app.listen(8099, () => {
-   console.log('Listening on 8099');
+app.listen(8999, () => {
+   console.log('Listening on 8999');
    mongoose.connect(config.db_url, { useMongoClient: true }).then(() => {
       console.log('connected to database');
    }, (err) => {

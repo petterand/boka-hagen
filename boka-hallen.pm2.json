@@ -1,0 +1,4 @@
+{
+   "name": "boka-hallen",
+   "script": "app/server.js"
+}

@@ -9,14 +9,22 @@
          </p>
 
       </div>
+      <div id="bookedDates" v-if="userBookedDates.length > 0">
+         <p>Dina kommande bokningar</p>
+         <table>
+            <tr v-for="(dates, index) in userBookedDates" v-bind:key="index">
+               <td>{{dates}}</td><td class="delete-booking fa fa-trash"></td>
+            </tr>
+         </table>
+      </div>
       <div id="selectedDatesWrapper" v-if="selectedDates.length > 0">
          <p>Dina valda datum:</p>
-         <p v-for="(dates, index) in selectedDates" v-bind:key="index">{{dates.from}} - {{dates.to}}</p>
+         <table>
+            <tr v-for="(dates, index) in selectedDates" v-bind:key="index">
+               <td>{{`${dates.from} - ${dates.to}`}}</td>
+            </tr>
+         </table>
          <button @click="bookSelectedDates">Boka valda datum</button>
-      </div>
-      <div id="bookedDates" v-if="userBookedDates.length > 0">
-         <p>Dina bokade datum:</p>
-         <p v-for="(dates, index) in userBookedDates" v-bind:key="index">{{dates}}</p>
       </div>
    </div>
 </div>
@@ -24,6 +32,7 @@
 
 <script>
 import Utils from "../../services/Utils";
+import moment from "moment";
 export default {
   methods: {
     signout() {
@@ -40,6 +49,7 @@ export default {
     userBookedDates() {
       return this.$store.state.bookings
         .filter(booking => booking.user.username === this.username)
+        .filter(booking => moment(booking.from).isSameOrAfter(moment()))
         .map(booking => {
           return `${booking.from} - ${booking.to}`;
         });

@@ -23,6 +23,14 @@ export default {
   mounted() {
     this.$store.dispatch("fetchIsAuthenticated");
     this.$store.dispatch("getBookings");
+    window.addEventListener(
+      "touchstart",
+      function(e) {
+        if (!this.$store.state.isTouchDevice) {
+          this.$store.dispatch("screenTouched");
+        }
+      }.bind(this)
+    );
     document.querySelector("body").addEventListener(
       "click",
       function(e) {

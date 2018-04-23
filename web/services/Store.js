@@ -10,6 +10,7 @@ Vue.use(Vuex);
 const state = {
    currentDate: new Date().getTime(),
    user: null,
+   isTouchDevice: false,
    isLoggedIn: false,
    selectedDates: [],
    bookings: [],
@@ -50,6 +51,9 @@ const mutations = {
    },
    TOGGLE_MENU(state) {
       state.menuOpen = !state.menuOpen;
+   },
+   SCREEN_TOUCHED(state) {
+      state.isTouchDevice = true;
    }
 }
 
@@ -113,6 +117,9 @@ const actions = {
    },
    toggleMenu({ commit }) {
       commit("TOGGLE_MENU");
+   },
+   screenTouched({ commit }) {
+      commit("SCREEN_TOUCHED");
    }
 };
 

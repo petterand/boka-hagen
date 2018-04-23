@@ -12,6 +12,7 @@
                   :data-date="day.date" 
                   class="dayRow"
                   v-bind:class="{'booked': day.booking, 'selectable': $store.state.isLoggedIn}"
+                  @click="click"
                   @mousedown.stop="down" 
                   @mousemove.stop="move" 
                   @mouseup.stop="up">
@@ -61,7 +62,16 @@ export default {
     isSunday(date) {
       return moment(date).day() === 0;
     },
-    click(e) {},
+    click(e) {
+      if (this.$store.state.isTouchDevice && !this.$store.state.menuOpen) {
+        if (!e.target.classList.contains("selected")) {
+          e.target.classList.add("selected");
+        } else {
+          e.target.classList.remove("selected");
+        }
+        this.$store.dispatch("selectDates", this.getSelectedDates());
+      }
+    },
     move(e) {
       if (this.mouseIsDown) {
         if (!e.target.classList.contains("selected")) {
@@ -70,7 +80,7 @@ export default {
       }
     },
     down(e) {
-      if (this.$store.state.isLoggedIn) {
+      if (!this.$store.state.isTouchDevice && this.$store.state.isLoggedIn) {
         this.mouseIsDown = true;
         if (!e.target.classList.contains("selected")) {
           e.target.classList.add("selected");
@@ -80,8 +90,10 @@ export default {
       }
     },
     up() {
-      this.mouseIsDown = false;
-      this.$store.dispatch("selectDates", this.getSelectedDates());
+      if (this.mouseIsDown) {
+        this.mouseIsDown = false;
+        this.$store.dispatch("selectDates", this.getSelectedDates());
+      }
     },
     getSelectedDates() {
       return [...document.querySelectorAll("#calendar .selected:not(.booked)")]

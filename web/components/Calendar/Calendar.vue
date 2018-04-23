@@ -63,7 +63,11 @@ export default {
       return moment(date).day() === 0;
     },
     click(e) {
-      if (this.$store.state.isTouchDevice && !this.$store.state.menuOpen) {
+      const shouldHandleClick =
+        this.$store.state.isLoggedIn &&
+        this.$store.state.isTouchDevice &&
+        !this.$store.state.menuOpen;
+      if (shouldHandleClick) {
         if (!e.target.classList.contains("selected")) {
           e.target.classList.add("selected");
         } else {

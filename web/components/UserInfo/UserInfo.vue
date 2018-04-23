@@ -39,7 +39,7 @@ export default {
       this.$store.dispatch("logout");
     },
     bookSelectedDates() {
-      this.$store.dispatch("bookDates", this.selectedDates);
+      this.$store.dispatch("bookDates");
     }
   },
   computed: {

@@ -11,8 +11,9 @@ const state = {
    user: null,
    isLoggedIn: false,
    selectedDates: [],
+   bookings: [],
    showRegister: false,
-   bookings: []
+   menuOpen: false
 };
 
 const mutations = {
@@ -45,6 +46,9 @@ const mutations = {
    },
    SET_BOOKINGS(state, bookings) {
       state.bookings = [...state.bookings, ...bookings];
+   },
+   TOGGLE_MENU(state) {
+      state.menuOpen = !state.menuOpen;
    }
 }
 
@@ -96,14 +100,18 @@ const actions = {
          });
       });
    },
-   bookDates({ commit }, dates) {
+   bookDates({ commit, state }) {
       return new Promise((resolve, reject) => {
-         BookingsService.bookDates(dates).then((newBookings) => {
+         const formattedDates = Utils.getDateRanges(state.selectedDates);
+         BookingsService.bookDates(formattedDates).then((newBookings) => {
             commit("SET_BOOKINGS", newBookings);
          }, (err) => {
             reject(err);
          });
       });
+   },
+   toggleMenu({ commit }) {
+      commit("TOGGLE_MENU");
    }
 };
 

@@ -32,12 +32,15 @@ export default {
     moment.locale("sv");
   },
   mounted() {
-    document.querySelector("body").addEventListener("click", e => {
-      const monthListElem = document.querySelector("#monthWrapper");
-      if (!monthListElem.contains(e.target)) {
-        this.resetSelection();
-      }
-    });
+    document.querySelector("body").addEventListener(
+      "click",
+      function(e) {
+        const monthListElem = document.querySelector("#monthWrapper");
+        if (!monthListElem.contains(e.target) && !this.$store.state.menuOpen) {
+          this.resetSelection();
+        }
+      }.bind(this)
+    );
   },
   data() {
     return {

@@ -19,6 +19,7 @@ module.exports = {
       publicPath: '/out/',
       inline: true,
       port: 9099,
+      host: '0.0.0.0',
       proxy: {
          '/api': 'http://localhost:8999'
       }

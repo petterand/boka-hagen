@@ -3,6 +3,11 @@
 @import '../components/UserInfo/user-info.less';
 @import '../components/Login/login.less';
 @import '../components/RegisterUser/register-user.less';
+@import '../components/TopMenu/top-menu.less';
+* {
+   box-sizing: border-box;
+}
+
 html,
 body,
 #app,
@@ -24,32 +29,11 @@ a {
    color: #000;
 }
 
-#index-wrapper {
-   display: flex;
-   width: 80%;
-   margin: 0 auto;
-   padding-top: 20px;
-   height: ~"calc(100% - 40px)";
-}
-
-#left-wrapper {
-   flex: 0 1 70%;
-   margin-right: 12px;
-   overflow-y: scroll;
-   padding-right: 16px;
-}
-
-#right-wrapper {
-   flex: 0 0 30%;
-}
-
-#user-info-wrapper {
-   flex: 1 0 30%
-}
-
-input {
+input[type=text],
+input[type=password] {
    font-size: 1em;
    padding: 0.4em 0.3em;
+   border: 1px solid #ececec;
 }
 
 button,
@@ -66,5 +50,55 @@ input[type="submit"] {
       color: #426FC5;
       background-color: #fff;
       border: 1px solid #426FC5;
+   }
+}
+
+@media screen and (max-width:800px) {
+   #index-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin: 0 8px;
+      height: ~"calc(100% - 40px)";
+   }
+   #left-wrapper {
+      overflow-y: scroll;
+      flex: 1
+   }
+   #right-wrapper {
+      position: fixed;
+      width: 75%;
+      top: 0px;
+      right: -100%;
+      bottom: 0;
+      background-color: #fff;
+      transition: right 0.2s ease-in;
+      padding: 12px;
+      border-left: 1px solid #dadada;
+      box-shadow: 0 0 16px rgba(0, 0, 0, .28);
+      &.open {
+         right: 0;
+      }
+   }
+}
+
+@media screen and (min-width: 801px) {
+   #index-wrapper {
+      display: flex;
+      width: 80%;
+      margin: 0 auto;
+      padding-top: 20px;
+      height: ~"calc(100% - 40px)";
+   }
+   #top-menu {
+      display: none;
+   }
+   #left-wrapper {
+      flex: 0 1 70%;
+      margin-right: 12px;
+      overflow-y: scroll;
+      padding-right: 16px;
+   }
+   #right-wrapper {
+      flex: 0 0 30%;
    }
 }

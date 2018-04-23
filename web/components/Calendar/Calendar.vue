@@ -68,28 +68,28 @@ export default {
         this.$store.state.isTouchDevice &&
         !this.$store.state.menuOpen;
       if (shouldHandleClick) {
-        if (!e.target.classList.contains("selected")) {
-          e.target.classList.add("selected");
+        if (!e.currentTarget.classList.contains("selected")) {
+          e.currentTarget.classList.add("selected");
         } else {
-          e.target.classList.remove("selected");
+          e.currentTarget.classList.remove("selected");
         }
         this.$store.dispatch("selectDates", this.getSelectedDates());
       }
     },
     move(e) {
       if (this.mouseIsDown) {
-        if (!e.target.classList.contains("selected")) {
-          e.target.classList.add("selected");
+        if (!e.currentTarget.classList.contains("selected")) {
+          e.currentTarget.classList.add("selected");
         }
       }
     },
     down(e) {
       if (!this.$store.state.isTouchDevice && this.$store.state.isLoggedIn) {
         this.mouseIsDown = true;
-        if (!e.target.classList.contains("selected")) {
-          e.target.classList.add("selected");
+        if (!e.currentTarget.classList.contains("selected")) {
+          e.currentTarget.classList.add("selected");
         } else {
-          e.target.classList.remove("selected");
+          e.currentTarget.classList.remove("selected");
         }
       }
     },

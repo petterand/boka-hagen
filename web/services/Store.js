@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import AuthService from './AuthService';
 import BookingsService from './BookingsService';
+import Utils from './Utils';
 
 
 Vue.use(Vuex);

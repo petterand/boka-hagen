@@ -13,7 +13,7 @@
          <p>Dina kommande bokningar</p>
          <table>
             <tr v-for="(date, index) in userBookedDates" v-bind:key="index">
-               <td>{{date.from}} - {{date.to}}</td><td class="delete-booking fa fa-trash" @click="deleteBooking(date.keyId)"></td>
+               <td>{{date.from}} - {{date.to}}</td><td class="delete-booking fa fa-trash" @click="deleteBooking(date)"></td>
             </tr>
          </table>
       </div>
@@ -33,6 +33,11 @@
 <script>
 import Utils from "../../services/Utils";
 import moment from "moment";
+import { create } from "vue-modal-dialogs";
+import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation.vue";
+
+const confirmDelete = create(DeleteConfirmation, "date");
+
 export default {
   methods: {
     signout() {
@@ -41,8 +46,12 @@ export default {
     bookSelectedDates() {
       this.$store.dispatch("bookDates");
     },
-    deleteBooking(id) {
-      this.$store.dispatch("deleteBooking", id);
+    deleteBooking(date) {
+      confirmDelete(date).then(result => {
+        if (result === true) {
+          this.$store.dispatch("deleteBooking", date.keyId);
+        }
+      });
     }
   },
   computed: {

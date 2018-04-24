@@ -49,6 +49,11 @@ const mutations = {
    SET_BOOKINGS(state, bookings) {
       state.bookings = [...state.bookings, ...bookings];
    },
+   DELETE_BOOKING(state, id) {
+      state.bookings = state.bookings.filter(booking => {
+         return booking.keyId !== id;
+      });
+   },
    TOGGLE_MENU(state) {
       state.menuOpen = !state.menuOpen;
    },
@@ -110,6 +115,15 @@ const actions = {
          const formattedDates = Utils.getDateRanges(state.selectedDates);
          BookingsService.bookDates(formattedDates).then((newBookings) => {
             commit("SET_BOOKINGS", newBookings);
+         }, (err) => {
+            reject(err);
+         });
+      });
+   },
+   deleteBooking({ commit }, id) {
+      return new Promise((resolve, reject) => {
+         BookingsService.deleteBooking(id).then(() => {
+            commit("DELETE_BOOKING", id);
          }, (err) => {
             reject(err);
          });

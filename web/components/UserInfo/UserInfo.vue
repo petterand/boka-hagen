@@ -12,8 +12,8 @@
       <div id="bookedDates" v-if="userBookedDates.length > 0">
          <p>Dina kommande bokningar</p>
          <table>
-            <tr v-for="(dates, index) in userBookedDates" v-bind:key="index">
-               <td>{{dates}}</td><td class="delete-booking fa fa-trash"></td>
+            <tr v-for="(date, index) in userBookedDates" v-bind:key="index">
+               <td>{{date.from}} - {{date.to}}</td><td class="delete-booking fa fa-trash" @click="deleteBooking(date.keyId)"></td>
             </tr>
          </table>
       </div>
@@ -40,6 +40,9 @@ export default {
     },
     bookSelectedDates() {
       this.$store.dispatch("bookDates");
+    },
+    deleteBooking(id) {
+      this.$store.dispatch("deleteBooking", id);
     }
   },
   computed: {
@@ -49,10 +52,7 @@ export default {
     userBookedDates() {
       return this.$store.state.bookings
         .filter(booking => booking.user.username === this.username)
-        .filter(booking => moment(booking.from).isSameOrAfter(moment()))
-        .map(booking => {
-          return `${booking.from} - ${booking.to}`;
-        });
+        .filter(booking => moment(booking.from).isSameOrAfter(moment()));
     },
     username() {
       return this.$store.state.user.username;

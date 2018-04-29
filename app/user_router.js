@@ -4,6 +4,12 @@ const Roles = require('./configs/Roles');
 
 const { isLoggedIn, isAdmin, getPasswordHash } = require('./AuthHelpers');
 
+router.get('/', isAdmin, (req, res) => {
+   User.find({}, (err, users) => {
+      if (err) { return res.status(500).send(err) }
+      res.status(200).send(users);
+   });
+})
 
 router.post('/', (req, res) => {
    let newUser = req.body;
@@ -28,8 +34,12 @@ router.post('/', (req, res) => {
    }
 });
 
-router.delete('/:id', isAdmin, (req, res) => {
-
+router.delete('/:username', isAdmin, (req, res) => {
+   const ueername = req.params.username;
+   User.deleteOne({ username: username }, (err) => {
+      if (err) { return res.status(500).send(err); }
+      res.status(200).send({ "deleted": username });
+   });
 });
 
 router.put('/:id', isAdmin, (req, res) => {

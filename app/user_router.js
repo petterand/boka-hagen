@@ -42,7 +42,7 @@ router.delete('/:username', isAdmin, (req, res) => {
    });
 });
 
-router.put('/:id', isAdmin, (req, res) => {
+router.put('/:username', isAdmin, (req, res) => {
 
 });
 

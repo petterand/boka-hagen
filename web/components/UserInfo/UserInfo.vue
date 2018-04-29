@@ -4,7 +4,11 @@
       <div id="imageAndUsername">
          <img src="../../assets/avatar.png">
          <p>
-            <span>{{fullname}}</span>
+            <span>
+               <span>{{fullname}}</span>
+               <span class="fas fa-pencil-alt userInfo_edit-button"></span>
+               <span v-if="$store.getters.isAdmin" class="fas fa-hand-spock userInfo_edit-button" @click="openAdminView"></span>
+            </span>
             <span class="signout"><a href="" @click.prevent="signout">Logga ut</a></span>
          </p>
 
@@ -35,8 +39,10 @@ import Utils from "../../services/Utils";
 import moment from "moment";
 import { create } from "vue-modal-dialogs";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation.vue";
+import AdminView from "../AdminView/AdminView.vue";
 
 const confirmDelete = create(DeleteConfirmation, "date");
+const adminView = create(AdminView);
 
 export default {
   methods: {
@@ -45,6 +51,9 @@ export default {
     },
     bookSelectedDates() {
       this.$store.dispatch("bookDates");
+    },
+    openAdminView() {
+      adminView().then(result => {});
     },
     deleteBooking(date) {
       confirmDelete(date).then(result => {

@@ -146,6 +146,9 @@ const getters = {
    },
    getCurrentMonth(state) {
       return new Date(state.currentDate).getMonth();
+   },
+   isAdmin(state) {
+      return state.user.roles.includes('admin');
    }
 }
 

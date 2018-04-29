@@ -2,9 +2,9 @@
    <div>
       <div id="calendar">
          <div id="calendarHeader">
-            <div class="monthNavigationButton prev fa fa-chevron-left" v-on:click="gotoPreviousMonth"></div>
+            <div class="monthNavigationButton prev fas fa-chevron-left" v-on:click="gotoPreviousMonth"></div>
             <div class="monthName">{{formatCurrentDate("MMMM YYYY")}}</div>
-            <div class="monthNavigationButton next fa fa-chevron-right" v-on:click="gotoNextMonth"></div>
+            <div class="monthNavigationButton next fas fa-chevron-right" v-on:click="gotoNextMonth"></div>
          </div>
          <div id="monthWrapper">
             <div v-for="(day,index) in getMonthItems()" 

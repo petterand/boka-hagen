@@ -42,8 +42,49 @@ router.delete('/:username', isAdmin, (req, res) => {
    });
 });
 
-router.put('/:id', isAdmin, (req, res) => {
-
+router.put('/:username', isAdmin, (req, res) => {
+   const username = req.params.username;
+   if (req.body.password) {
+      updatePassword(username, req.body).then(() => {
+         res.status(200).send();
+      }, (err) => {
+         res.status(500).send(err);
+      });
+   } else {
+      console.log('Updating user', username);
+      updateUser(username, req.body).then(user => {
+         console.log('Updated user', user);
+         res.status(200).send(user);
+      }, err => {
+         console.log('failed to update user', username, err);
+         res.status(500).send(err);
+      })
+   }
 });
+
+function updatePassword(username, body) {
+   return new Promise((resolve, reject) => {
+      if (body.password === body.confirm_password) {
+         getPasswordHash(body.password).then(hash => {
+            User.update({ username: username }, { $set: { password: hash } }, (err) => {
+               if (err) { return reject(err) }
+               resolve();
+            });
+         })
+      } else {
+         reject();
+      }
+   });
+}
+
+function updateUser(username, body) {
+   return new Promise((resolve, reject) => {
+      User.update({ username: username }, { $set: { name: body.name } }, (err, user) => {
+         if (err) { return reject(err); }
+         resolve({ name, username } = body);
+      });
+   });
+}
+
 
 module.exports = router;

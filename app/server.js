@@ -27,8 +27,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-mongoose.Promise = global.Promise;
-
 require('./passport')(passport);
 
 app.post('/api/signout', function (req, res) {
@@ -37,7 +35,7 @@ app.post('/api/signout', function (req, res) {
 });
 
 app.post('/api/login', passport.authenticate('login'), (req, res) => {
-   var user = { username: req.user.username, name: req.user.name };
+   var user = { username: req.user.username, name: req.user.name, roles: req.user.roles };
    res.send({ status: 'loggedin', user });
 });
 
@@ -46,7 +44,7 @@ app.get('/api/isAuthenticated', (req, res) => {
       isAuthenticated: req.isAuthenticated()
    };
    if (req.user) {
-      responseObject.user = { username: req.user.username, name: req.user.name };
+      responseObject.user = { username: req.user.username, name: req.user.name, roles: req.user.roles };
    }
    res.send(responseObject);
 });
@@ -56,7 +54,7 @@ app.use('/api/user', require('./user_router'));
 
 app.listen(8999, () => {
    console.log('Listening on 8999');
-   mongoose.connect(config.db_url, { useMongoClient: true }).then(() => {
+   mongoose.connect(config.db_url).then(() => {
       console.log('connected to database');
    }, (err) => {
       console.log("ERR", err);

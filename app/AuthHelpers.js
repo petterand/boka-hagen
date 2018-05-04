@@ -11,7 +11,7 @@ function isLoggedIn(req, res, next) {
 
 function isAdmin(req, res, next) {
    if (req.isAuthenticated() &&
-      (req.user && req.user.roles && req.user.roles.include(Roles.ADMIN))) {
+      (req.user && req.user.roles && req.user.roles.includes(Roles.ADMIN))) {
       return next();
    }
    res.status(401).send();

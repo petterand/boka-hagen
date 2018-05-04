@@ -1,5 +1,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
    entry: [__dirname + '/web/app.js', __dirname + '/web/style/style.less'],
@@ -8,6 +9,7 @@ module.exports = {
       filename: 'bundle.js',
       publicPath: '/out/'
    },
+   mode: 'development',
    resolve: {
       alias: {
          'vue$': 'vue/dist/vue.esm.js'
@@ -24,6 +26,9 @@ module.exports = {
          '/api': 'http://localhost:8999'
       }
    },
+   plugins: [
+      new VueLoaderPlugin()
+   ],
    module: {
       rules: [
          {

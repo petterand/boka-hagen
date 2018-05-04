@@ -6,7 +6,7 @@
          <p>
             <span>
                <span>{{fullname}}</span>
-               <span class="fas fa-pencil-alt userInfo_edit-button"></span>
+               <span class="fas fa-pencil-alt userInfo_edit-button" @click="openEditUser"></span>
                <span v-if="$store.getters.isAdmin" class="fas fa-hand-spock userInfo_edit-button" @click="openAdminView"></span>
             </span>
             <span class="signout"><a href="" @click.prevent="signout">Logga ut</a></span>
@@ -40,9 +40,11 @@ import moment from "moment";
 import { create } from "vue-modal-dialogs";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation.vue";
 import AdminView from "../AdminView/AdminView.vue";
+import EditUser from "../EditUser/EditUser.vue";
 
 const confirmDelete = create(DeleteConfirmation, "date");
 const adminView = create(AdminView);
+const editUser = create(EditUser, "user");
 
 export default {
   methods: {
@@ -53,7 +55,10 @@ export default {
       this.$store.dispatch("bookDates");
     },
     openAdminView() {
-      adminView().then(result => {});
+      adminView();
+    },
+    openEditUser() {
+      editUser(this.$store.state.user);
     },
     deleteBooking(date) {
       confirmDelete(date).then(result => {

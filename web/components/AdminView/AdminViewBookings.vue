@@ -8,12 +8,25 @@
          <td>{{booking.user.name}}</td>
          <td>
             <span class="fas fa-pencil-alt admin-edit"></span>
-            <span class="fas fa-times admin-delete"></span>
+            <span class="fas fa-times admin-delete" @click="deleteBooking(booking)"></span>
          </td>
       </tr>
    </table>
 </template>
 
 <script>
-export default {};
+import { create } from "vue-modal-dialogs";
+import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation.vue";
+const confirmDelete = create(DeleteConfirmation, "date");
+export default {
+  methods: {
+    deleteBooking(booking) {
+      confirmDelete(booking).then(result => {
+        if (result === true) {
+          this.$store.dispatch("deleteBooking", booking.keyId);
+        }
+      });
+    }
+  }
+};
 </script>

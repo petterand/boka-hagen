@@ -2,6 +2,7 @@
 <div class="modal-dialog">
   <div class="modal-dialog_message-mask" @click="$close(false)"></div>
   <div id="admin-view-dialog" class="modal-dialog_content-wrapper">
+     <div class="modal-dialog_close-icon fas fa-times" @click="$close"></div>
      <div class="modal-dialog_content">
         <ul id="tab-menu">
            <li @click.stop="tabClick('users')" v-bind:class="{'selected': currentView === 'users'}">Användare</li>

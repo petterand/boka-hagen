@@ -7,6 +7,12 @@
    display: flex;
    justify-content: center;
    align-items: center;
+   &_close-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      cursor: pointer;
+   }
    &_message-mask {
       background-color: rgba(0, 0, 0, 0.5);
       top: 0;
@@ -21,6 +27,7 @@
       border-radius: 4px;
       padding: 12px;
       &-wrapper {
+         position: relative;
          z-index: 2;
       }
    }

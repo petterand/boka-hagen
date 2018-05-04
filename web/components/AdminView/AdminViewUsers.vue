@@ -7,7 +7,7 @@
          <td>{{user.name}}</td>
          <td>{{user.username}}</td>
          <td>
-            <span class="fas fa-pencil-alt admin-edit"></span>
+            <span class="fas fa-pencil-alt admin-edit" @click="openEditUser(user)"></span>
             <span class="fas fa-times admin-delete"></span>
          </td>
       </tr>
@@ -16,6 +16,9 @@
 
 <script>
 import UserService from "../../services/UserService";
+import EditUser from "../EditUser/EditUser.vue";
+import { create } from "vue-modal-dialogs";
+const editUser = create(EditUser, "user");
 export default {
   data() {
     return {
@@ -26,6 +29,11 @@ export default {
     UserService.getUsers().then(users => {
       this.users = users;
     });
+  },
+  methods: {
+    openEditUser(user) {
+      editUser(user);
+    }
   }
 };
 </script>

@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import AuthService from './AuthService';
 import BookingsService from './BookingsService';
 import Utils from './Utils';
+import UserService from './UserService';
 
 
 Vue.use(Vuex);
@@ -59,6 +60,9 @@ const mutations = {
    },
    SCREEN_TOUCHED(state) {
       state.isTouchDevice = true;
+   },
+   UPDATE_USER(state, updatedUser) {
+      Vue.set(state.user, 'name', updatedUser.name);
    }
 }
 
@@ -134,6 +138,16 @@ const actions = {
    },
    screenTouched({ commit }) {
       commit("SCREEN_TOUCHED");
+   },
+   updateUser({ commit }, user) {
+      return new Promise((resolve, reject) => {
+         UserService.updateUser(user).then((updatedUser) => {
+            commit("UPDATE_USER", updatedUser);
+            resolve(updatedUser);
+         }, err => {
+            reject(err);
+         })
+      })
    }
 };
 

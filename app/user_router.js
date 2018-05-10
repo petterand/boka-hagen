@@ -14,23 +14,32 @@ router.get('/', isAdmin, (req, res) => {
 router.post('/', (req, res) => {
    let newUser = req.body;
    if (newUser) {
-      if (newUser.password === newUser.confirm_password) {
-         getPasswordHash(newUser.password).then((hash) => {
-            const user = new User({
-               name: newUser.name,
-               username: newUser.username,
-               password: hash,
-               roles: [Roles.USER]
-            });
-            user.save(err => {
-               if (err) { return res.status(500).send(err) }
-               res.status(201).send({ name, username, roles } = user);
-            });
+      User.find({ username: newUser.username }, (err, users) => {
+         if (err) { return res.status(500).send(err) };
+         if (users.length === 0) {
+            if (newUser.password === newUser.confirm_password) {
+               getPasswordHash(newUser.password).then((hash) => {
+                  const user = new User({
+                     name: newUser.name,
+                     username: newUser.username,
+                     password: hash,
+                     roles: [Roles.USER]
+                  });
+                  user.save(err => {
+                     if (err) { return res.status(500).send(err) }
+                     res.status(201).send({ name, username, roles } = user);
+                  });
 
-         }, (err) => {
-            res.status(500).send(err);
-         })
-      }
+               }, (err) => {
+                  res.status(500).send(err);
+               })
+            } else {
+               res.status(400).send({ message: 'NON_MATCHING_PASSWORDS' });
+            }
+         } else {
+            res.status(400).send({ message: 'USERNAME_TAKEN' });
+         }
+      })
    }
 });
 

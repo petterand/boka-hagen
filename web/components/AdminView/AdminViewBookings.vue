@@ -17,11 +17,15 @@
 <script>
 import { create } from "vue-modal-dialogs";
 import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation.vue";
-const confirmDelete = create(DeleteConfirmation, "date");
+const confirmDelete = create(DeleteConfirmation, "data");
 export default {
   methods: {
     deleteBooking(booking) {
-      confirmDelete(booking).then(result => {
+      const data = {
+        question: "Är du säker på att du vill ta bort bokningen?",
+        details: `${booking.from} - ${booking.to}`
+      };
+      confirmDelete(data).then(result => {
         if (result === true) {
           this.$store.dispatch("deleteBooking", booking.keyId);
         }

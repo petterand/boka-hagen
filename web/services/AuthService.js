@@ -47,6 +47,8 @@ function register(register_creds) {
    return new Promise((resolve, reject) => {
       Vue.http.post('/api/user/', register_creds).then(response => {
          resolve(response.body);
+      }, err => {
+         reject(err);
       })
    })
 }

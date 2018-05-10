@@ -3,7 +3,7 @@
       <tr>
          <th>Namn</th><th>Användarnamn</th>
       </tr>
-      <tr v-for="user in users" v-bind:key="user.username">
+      <tr v-for="user in users" v-bind:key="user._id">
          <td>{{user.name}}</td>
          <td>{{user.username}}</td>
          <td>

@@ -42,7 +42,7 @@ import DeleteConfirmation from "../DeleteConfirmation/DeleteConfirmation.vue";
 import AdminView from "../AdminView/AdminView.vue";
 import EditUser from "../EditUser/EditUser.vue";
 
-const confirmDelete = create(DeleteConfirmation, "date");
+const confirmDelete = create(DeleteConfirmation, "data");
 const adminView = create(AdminView);
 const editUser = create(EditUser, "user");
 
@@ -61,7 +61,11 @@ export default {
       editUser(this.$store.state.user);
     },
     deleteBooking(date) {
-      confirmDelete(date).then(result => {
+      const data = {
+        question: "Är du säker på att du vill ta bort bokningen?",
+        details: `${booking.from} - ${booking.to}`
+      };
+      confirmDelete(data).then(result => {
         if (result === true) {
           this.$store.dispatch("deleteBooking", date.keyId);
         }

@@ -60,14 +60,14 @@ export default {
     openEditUser() {
       editUser(this.$store.state.user);
     },
-    deleteBooking(date) {
+    deleteBooking(booking) {
       const data = {
         question: "Är du säker på att du vill ta bort bokningen?",
         details: `${booking.from} - ${booking.to}`
       };
       confirmDelete(data).then(result => {
         if (result === true) {
-          this.$store.dispatch("deleteBooking", date.keyId);
+          this.$store.dispatch("deleteBooking", booking.keyId);
         }
       });
     }

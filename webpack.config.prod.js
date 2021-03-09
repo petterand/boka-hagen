@@ -1,70 +1,71 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const webpack = require('webpack');
-const { VueLoaderPlugin } = require('vue-loader');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
+const { VueLoaderPlugin } = require("vue-loader");
 
 module.exports = {
-   entry: [__dirname + '/web/app.js', __dirname + '/web/style/style.less'],
+   entry: [__dirname + "/web/app.js", __dirname + "/web/style/style.less"],
    output: {
-      path: __dirname + '/dist/',
-      filename: 'bundle.js'
+      path: __dirname + "/dist/",
+      filename: "bundle.js",
    },
    resolve: {
       alias: {
-         'vue$': 'vue/dist/vue.esm.js'
-      }
+         vue$: "vue/dist/vue.esm.js",
+      },
    },
-   mode: 'production',
+   mode: "production",
    module: {
       rules: [
          {
             test: /\.js$/,
             exclude: /(node_modules|bower_components)/,
             use: {
-               loader: 'babel-loader',
+               loader: "babel-loader",
                options: {
-                  presets: ['env']
-               }
-            }
+                  presets: ["env"],
+               },
+            },
          },
          {
             test: /\.vue$/,
-            loader: 'vue-loader'
+            loader: "vue-loader",
          },
          {
             test: /\.html$/,
-            loader: 'raw-loader'
+            loader: "raw-loader",
          },
          {
             test: /\.less$/,
-            use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+            use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
          },
          {
             test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-            loader: "file-loader?name=fonts/[name].[ext]"
+            loader: "file-loader?name=fonts/[name].[ext]",
          },
          {
             test: /\.(woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,
-            loader: "url-loader?limit=10000&name=fonts/[name].[ext]"
+            loader: "url-loader?limit=10000&name=fonts/[name].[ext]",
          },
          {
             test: /\.(png|jp(e*)g)$/,
-            loader: "url-loader?limit=6000&name=assets/[name].[ext]"
-         }
-      ]
+            loader: "url-loader?limit=6000&name=assets/[name].[ext]",
+            options: {
+               esModule: false,
+            },
+         },
+      ],
    },
    plugins: [
       new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
-         filename: 'style.css'
+         filename: "style.css",
       }),
-      new CopyWebpackPlugin([
-         { from: 'web/prod.html', to: 'index.html' }
-      ]),
+      new CopyWebpackPlugin([{ from: "web/prod.html", to: "index.html" }]),
       new webpack.DefinePlugin({
-         'process.env': {
-            'NODE_ENV': JSON.stringify('production')
-         }
-      })
-   ]
-}
+         "process.env": {
+            NODE_ENV: JSON.stringify("production"),
+         },
+      }),
+   ],
+};
